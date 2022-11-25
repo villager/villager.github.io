@@ -116,7 +116,14 @@ p {
     padding: 30px;
     background: #1f1d1d
 }
-
+.justify {
+    text-align:justify;  
+    text-justify:auto;
+}
+.format-image {
+    max-width: 400px;
+    max-height:400px;
+}
 .box-container {
     display: flex;
     justify-content: center;
