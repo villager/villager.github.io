@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>Customcolor picker tool</title>
+<link rel="stylesheet" href="./style/battle.css" />
+<link rel="stylesheet" href="./style/client.css" />
+<link rel="stylesheet" href="./style/sim-types.css" />
+<link rel="stylesheet" href="./style/client3.css" />
+<link rel="stylesheet" href="./style/utilichart.css" />
+<link rel="stylesheet" href="./style/plugins.css" />
+<link rel="stylesheet" href="./style/casino.css" />
+<link rel="stylesheet" href="./style/css/emojis-v1.css" />
+<link rel="stylesheet" href="./style/chess.css" />
+<link rel="stylesheet" href="./style/font-awesome.css" />
+<link rel="stylesheet" href="./style/remix-icons.css" />
+<style>
+    /* Estilos existentes */
+    #header h1 {
+        color: black;
+        padding-left: 0.5em;
+        text-shadow: 2px 2px 1px #888;
+    }
+    #html-input, #html-output {
+        display: block;
+    }
+    #html-input {
+        left: 0;
+        right: auto;
+        width: 500px;
+        /* Ajustar padding para que el contenido se ajuste mejor */
+        padding: 20px; 
+        box-sizing: border-box; /* Incluir padding en el ancho */
+        display: flex; /* Usar flexbox para centrar contenido */
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; /* Apilar elementos verticalmente */
+    }
+    #html-output {
+        width: auto;
+        right: 0;
+        left: 501px;
+    }
+    #html-editor {
+        /* Ya no es el editor ACE, es un contenedor flex */
+        position: static; /* Quitar absolute position */
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Asegurar que ocupe todo el espacio disponible */
+        height: 100%; /* Asegurar que ocupe todo el espacio disponible */
+    }
+
+    /* Estilos del Color Picker (adaptados) */
+    .user-input-container, .picker-container {
+        background-color: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+        text-align: center;
+        width: 100%; /* Ocupar el ancho del contenedor */
+        max-width: 350px; /* Limitar el ancho máximo */
+        border: 1px solid #eee;
+        box-sizing: border-box; /* Incluir padding en el ancho total */
+    }
+
+    .user-input-container {
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        color: #2c3e50;
+        margin-bottom: 25px;
+        font-size: 1.8em;
+    }
+
+    #usernameInput {
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+        width: calc(100% - 30px);
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    #submitUsername {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.2s ease;
+    }
+
+    #submitUsername:hover {
+        background-color: #0056b3;
+    }
+
+    #displayUsername {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: color 0.1s ease-out;
+        min-height: 1.5em; /* Evitar que el contenedor salte al cargar el nombre */
+        color: #000000; /* Color inicial del nombre */
+    }
+
+    /* Ocultar el picker inicialmente */
+    .picker-container {
+        display: none;
+    }
+
+    canvas {
+        border: 1px solid #ccc;
+        cursor: crosshair;
+        display: block;
+        margin: 15px auto;
+    }
+
+    .color-preview {
+        width: 80px;
+        height: 80px;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 5px;
+        background-color: #000000; /* Color inicial */
+    }
+
+    #hexOutput {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1.1em;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+        width: 120px;
+        vertical-align: middle;
+        margin-left: 10px;
+        background-color: #eaf1f8;
+        color: #0056b3;
+        font-weight: bold;
+        outline: none;
+    }
+
+    .instructions {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 15px;
+    }
+    
+    /* Asegurarse de que el color en la userlist se aplique */
+    .userbutton strong {
+        color: inherit; /* Asegura que herede el color de su padre */
+        transition: color 0.1s ease-out; /* Para una transición suave */
+    }
+</style>
+<div id="header" class="header">
+    <h1>Customcolor picker tool</h1>
+    <div class="maintabbarbottom"></div>
+    <div class="userbar">
+        <button class="button" id="dark">Dark mode</button>
+    </div>
+</div>
+
+<div class="ps-room ps-room-light scrollable" id="html-input">
+    <div id="html-editor">
+        <div class="user-input-container" id="userInputContainer">
+            <h1>Ingresa tu Nombre</h1>
+            <input type="text" id="usernameInput" placeholder="Tu nombre de usuario">
+            <button id="submitUsername">Continuar</button>
+        </div>
+
+        <div class="picker-container" id="colorPickerContainer">
+            <p id="displayUsername"></p>
+            <h1>Selector de Color</h1>
+
+            <canvas id="colorSquare" width="250" height="250"></canvas>
+            <canvas id="hueBar" width="250" height="30"></canvas>
+
+            <div>
+                <div class="color-preview" id="selectedColorPreview"></div>
+                <input type="text" id="hexOutput" value="#000000" readonly>
+            </div>
+            <p class="instructions">Pasa el cursor para previsualizar, haz clic para fijar el color.</p>
+        </div>
+    </div>
+</div>
+
+<div class="ps-room ps-room-light scrollable" id="html-output">
+    <div class="chat-log hasuserlist">
+        <div class="inner">
+        </div>
+
+    </div>
+    <ul class="userlist">
+        <li class="userlist-count" id="upperstaff-userlist-users" style="text-align:center;padding:2px 0"><small><span id="upperstaff-usercount-users">1</span> user</small></li>
+        <li><button class="userbutton username" id="userlistUsernameButton"><em class="group staffgroup">#</em><strong id="userlistUsernameText"><em>You</em></strong></button></li>
+    </ul>
+    <div class="chat-log-add hasuserlist"></div>
+</div>
+<script src="../js/lib/jquery-2.2.4.min.js"></script>
+<script src="../js/lib/html-css-sanitizer-minified.js"></script>
+<script src="../config/config.js"></script>
+<script src="../js/battledata.js"></script>
+<script>
+// La función updateCode permanece igual, actualiza el span con el código
+function updateCode(output) {
+    document.getElementById('html-intro-code').textContent = output.innerHTML;
+}
+
+// La función updateRoomIntroWithName permanece igual, actualiza la caja de roomintro
+function updateRoomIntroWithName(usernameHtml) {
+    const outputDiv = document.getElementById('html-caja-output');
+    outputDiv.innerHTML = BattleLog.sanitizeHTML(usernameHtml);
+    updateCode(outputDiv);
+}
+
+// --- Referencias a elementos del DOM ---
+const userInputContainer = document.getElementById('userInputContainer');
+const usernameInput = document.getElementById('usernameInput');
+const submitUsernameBtn = document.getElementById('submitUsername');
+const colorPickerContainer = document.getElementById('colorPickerContainer');
+const displayUsername = document.getElementById('displayUsername');
+
+const colorSquareCanvas = document.getElementById('colorSquare');
+const colorSquareCtx = colorSquareCanvas.getContext('2d');
+const hueBarCanvas = document.getElementById('hueBar');
+const hueBarCtx = hueBarCanvas.getContext('2d');
+const selectedColorPreview = document.getElementById('selectedColorPreview');
+const hexOutput = document.getElementById('hexOutput');
+
+// Nuevo: Referencia al elemento 'You' en la userlist
+const userlistUsernameText = document.getElementById('userlistUsernameText');
+const userlistUsernameButton = document.getElementById('userlistUsernameButton'); // El botón padre para cambiar su estilo si es necesario
+
+// --- Variables de Estado del Color ---
+let fixedHue = 0;
+let fixedSaturation = 1;
+let fixedValue = 1;
+
+let isDraggingColorSquare = false;
+let isDraggingHueBar = false;
+
+// --- Funciones de Conversión de Color ---
+function hsvToRgb(h, s, v) {
+    let r, g, b;
+    let i = Math.floor(h / 60);
+    let f = h / 60 - i;
+    let p = v * (1 - s);
+    let q = v * (1 - f * s);
+    let t = v * (1 - (1 - f) * s);
+
+    switch (i % 6) {
+        case 0: r = v; g = t; b = p; break;
+        case 1: r = q; g = v; b = p; break;
+        case 2: r = p; g = v; b = t; break;
+        case 3: r = p; g = q; b = v; break;
+        case 4: r = t; g = p; b = v; break;
+        case 5: r = v; g = p; b = q; break;
+    }
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+}
+
+// --- Funciones de Dibujo ---
+function drawColorSquare() {
+    colorSquareCtx.clearRect(0, 0, colorSquareCanvas.width, colorSquareCanvas.height);
+    colorSquareCtx.fillStyle = `hsl(${fixedHue}, 100%, 50%)`;
+    colorSquareCtx.fillRect(0, 0, colorSquareCanvas.width, colorSquareCanvas.height);
+
+    let saturationGradient = colorSquareCtx.createLinearGradient(0, 0, colorSquareCanvas.width, 0);
+    saturationGradient.addColorStop(0, 'rgba(255,255,255,1)');
+    saturationGradient.addColorStop(1, 'rgba(255,255,255,0)');
+    colorSquareCtx.fillStyle = saturationGradient;
+    colorSquareCtx.fillRect(0, 0, colorSquareCanvas.width, colorSquareCanvas.height);
+
+    let valueGradient = colorSquareCtx.createLinearGradient(0, 0, 0, colorSquareCanvas.height);
+    valueGradient.addColorStop(0, 'rgba(0,0,0,0)');
+    valueGradient.addColorStop(1, 'rgba(0,0,0,1)');
+    colorSquareCtx.fillStyle = valueGradient;
+    colorSquareCtx.fillRect(0, 0, colorSquareCanvas.width, colorSquareCanvas.height);
+
+    const xFixed = fixedSaturation * colorSquareCanvas.width;
+    const yFixed = (1 - fixedValue) * colorSquareCanvas.height;
+    colorSquareCtx.beginPath();
+    colorSquareCtx.arc(xFixed, yFixed, 7, 0, 2 * Math.PI);
+    
+    const [r, g, b] = hsvToRgb(fixedHue, fixedSaturation, fixedValue);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    colorSquareCtx.strokeStyle = (brightness > 128) ? '#000' : '#FFF';
+    colorSquareCtx.lineWidth = 2;
+    colorSquareCtx.stroke();
+    colorSquareCtx.fillStyle = rgbToHex(r, g, b);
+    colorSquareCtx.fill();
+}
+
+function drawHueBar() {
+    hueBarCtx.clearRect(0, 0, hueBarCanvas.width, hueBarCanvas.height);
+    let hueGradient = hueBarCtx.createLinearGradient(0, 0, hueBarCanvas.width, 0);
+    for (let i = 0; i <= 360; i += 1) {
+        hueGradient.addColorStop(i / 360, `hsl(${i}, 100%, 50%)`);
+    }
+    hueBarCtx.fillStyle = hueGradient;
+    hueBarCtx.fillRect(0, 0, hueBarCanvas.width, hueBarCanvas.height);
+
+    const xFixed = (fixedHue / 360) * hueBarCanvas.width;
+    hueBarCtx.beginPath();
+    hueBarCtx.rect(xFixed - 3, 0, 6, hueBarCanvas.height);
+    hueBarCtx.strokeStyle = 'white';
+    hueBarCtx.lineWidth = 2;
+    hueBarCtx.stroke();
+}
+
+// --- Actualización de la Interfaz ---
+function updateDisplayColor(h, s, v) {
+    const [r, g, b] = hsvToRgb(h, s, v);
+    const hex = rgbToHex(r, g, b);
+    
+    selectedColorPreview.style.backgroundColor = hex;
+    hexOutput.value = hex;
+    displayUsername.style.color = hex; 
+    
+    // ¡NUEVO: Actualizar el color del nombre en la userlist!
+    userlistUsernameText.style.color = hex;
+
+    // Actualizar el /roomintro code
+    const currentUsername = displayUsername.textContent; // Ya no hay "Hola, !"
+    const usernameHtml = `<span style="color:${hex}">${currentUsername}</span>`;
+    updateRoomIntroWithName(usernameHtml);
+}
+
+// --- Manejo de Eventos del Ratón (sin cambios) ---
+function getMousePos(canvas, evt) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+
+colorSquareCanvas.addEventListener('mousemove', (e) => {
+    if (e.buttons === 0 && !isDraggingColorSquare) {
+        const pos = getMousePos(colorSquareCanvas, e);
+        const hoverSaturation = Math.max(0, Math.min(1, pos.x / colorSquareCanvas.width));
+        const hoverValue = Math.max(0, Math.min(1, 1 - (pos.y / colorSquareCanvas.height)));
+        updateDisplayColor(fixedHue, hoverSaturation, hoverValue);
+    }
+});
+
+colorSquareCanvas.addEventListener('mousedown', (e) => {
+    isDraggingColorSquare = true;
+    const pos = getMousePos(colorSquareCanvas, e);
+    fixedSaturation = Math.max(0, Math.min(1, pos.x / colorSquareCanvas.width));
+    fixedValue = Math.max(0, Math.min(1, 1 - (pos.y / colorSquareCanvas.height)));
+    updateDisplayColor(fixedHue, fixedSaturation, fixedValue);
+    drawColorSquare();
+});
+
+colorSquareCanvas.addEventListener('mousemove', (e) => { // Drag logic
+    if (isDraggingColorSquare) {
+        const pos = getMousePos(colorSquareCanvas, e);
+        fixedSaturation = Math.max(0, Math.min(1, pos.x / colorSquareCanvas.width));
+        fixedValue = Math.max(0, Math.min(1, 1 - (pos.y / colorSquareCanvas.height)));
+        updateDisplayColor(fixedHue, fixedSaturation, fixedValue);
+        drawColorSquare();
+    }
+});
+
+colorSquareCanvas.addEventListener('mouseup', () => {
+    isDraggingColorSquare = false;
+});
+
+colorSquareCanvas.addEventListener('mouseleave', () => {
+    if (!isDraggingColorSquare) {
+        updateDisplayColor(fixedHue, fixedSaturation, fixedValue);
+    }
+});
+
+hueBarCanvas.addEventListener('mousemove', (e) => {
+    if (e.buttons === 0 && !isDraggingHueBar) {
+        const pos = getMousePos(hueBarCanvas, e);
+        const hoverHue = Math.max(0, Math.min(360, (pos.x / hueBarCanvas.width) * 360));
+        updateDisplayColor(hoverHue, fixedSaturation, fixedValue);
+    }
+});
+
+hueBarCanvas.addEventListener('mousedown', (e) => {
+    isDraggingHueBar = true;
+    const pos = getMousePos(hueBarCanvas, e);
+    fixedHue = Math.max(0, Math.min(360, (pos.x / hueBarCanvas.width) * 360));
+    drawColorSquare();
+    updateDisplayColor(fixedHue, fixedSaturation, fixedValue);
+    drawHueBar();
+});
+
+hueBarCanvas.addEventListener('mousemove', (e) => { // Drag logic
+    if (isDraggingHueBar) {
+        const pos = getMousePos(hueBarCanvas, e);
+        fixedHue = Math.max(0, Math.min(360, (pos.x / hueBarCanvas.width) * 360));
+        drawColorSquare();
+        updateDisplayColor(fixedHue, fixedSaturation, fixedValue);
+        drawHueBar();
+    }
+});
+
+hueBarCanvas.addEventListener('mouseup', () => {
+    isDraggingHueBar = false;
+});
+
+hueBarCanvas.addEventListener('mouseleave', () => {
+    if (!isDraggingHueBar) {
+        updateDisplayColor(fixedHue, fixedSaturation, fixedValue);
+    }
+});
+
+// --- Lógica de Entrada de Usuario ---
+
+// Evento para el botón de enviar nombre de usuario
+submitUsernameBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+
+    if (username) {
+        displayUsername.textContent = username; // Ahora solo el nombre aquí
+        userlistUsernameText.textContent = username; // ¡Aquí se actualiza el nombre en la userlist!
+        userInputContainer.style.display = 'none';
+        colorPickerContainer.style.display = 'block';
+
+        drawHueBar();
+        drawColorSquare();
+        updateDisplayColor(fixedHue, fixedSaturation, fixedValue); // Esto también inicializa el /roomintro
+    } else {
+        alert('Por favor, ingresa tu nombre de usuario.');
+    }
+});
+
+// Permitir enviar con la tecla Enter en el input del nombre de usuario
+usernameInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        submitUsernameBtn.click();
+    }
+});
+
+// --- Funcionalidad del Dark Mode (sin cambios significativos en esta parte) ---
+$('#dark').on('click', function () {
+    var $html = $('html');
+    if ($html.hasClass('dark')) {
+        $html.removeClass('dark');
+    } else {
+        $html.addClass('dark');
+    }
+});
+
+</script>
