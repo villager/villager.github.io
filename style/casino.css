@@ -1,0 +1,311 @@
+/* Contenedor principal */
+.game-wrapper {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 146px;
+	right: 0;
+	height: 2em;
+	line-height: 2em;
+	text-align: center;
+	border-bottom: 1px #aaa solid;
+}
+.game-wrapper.active {
+	display: block;
+}
+.game-wrapper.active + .chat-log {
+	top: 2.4em;
+}
+.game-wrapper.hasuserlist {
+	left: 146px;
+}
+.game-title {
+    font-weight: bold;
+	cursor: pointer;
+    background-color: #445577;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+}
+
+.game-toggle {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #ccc;
+}
+
+.game-box {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #f0f0f0;
+    border-radius: 0 0 5px 5px;
+	top: 2em;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	line-height: 1em;
+	border-bottom: 1px #aaa solid;
+	border-right: 1px #aaa solid;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.15s;
+	-webkit-transition: max-height 0.15s;
+	touch-action: none;
+}
+
+.game-box.active {
+    max-height: 500px; /* Ajusta según necesidad */
+}
+
+/* Contenedor de la ruleta */
+.game-container {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    margin: 20px auto;
+    z-index: 1;
+}
+/* Rueda de la ruleta */
+/* casino.css */
+
+/* casino.css */
+
+/* Rueda de la ruleta */
+.game-wheel {
+    position: relative;
+    width: 300px; /* Adjust based on radius */
+    height: 300px; /* Adjust based on radius */
+    border-radius: 50%;
+    background: #0a5c36; /* Base color or default if segments don't fill */
+    border: 10px solid #333;
+    margin: 0 auto;
+    overflow: hidden; /* CRITICAL: Hides parts of segments outside the wheel */
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    display: flex; /* For centering the ball */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Segmentos de la ruleta */
+.game-segment {
+    position: absolute;
+    top: 0; /* Position at the top edge of the wheel container */
+    left: 50%; /* Center horizontally */
+    width: 50%; /* This will be the radius of the wheel */
+    height: 50%; /* This will be the radius of the wheel */
+    transform-origin: 0% 100%; /* IMPORTANT: Pivot point is the bottom-left of this element, which aligns with the wheel's center. */
+    /* background-color will be set by JS */
+    /* We'll use clip-path to define the wedge shape */
+    clip-path: polygon(0% 100%, 100% 100%, 100% 0%); /* This creates a right-angled triangle pointing from bottom-left (center) to top-right. */
+}
+
+.game-number {
+    position: absolute;
+    /* Position relative to the segment's origin (wheel's center) */
+    /* Adjust these values based on your radius and desired number placement */
+    top: 50px; /* Relative to segment, puts it at middle of vertical line */
+    left: 65%; /* Relative to segment, puts it at middle of horizontal line */
+    transform: translate(-50%, -50%) rotate(var(--number-rotation)) translateY(var(--number-distance)); /* Centered, rotated, and moved out */
+    font-weight: bold;
+    font-size: 12px;
+    z-index: 10; /* Ensure numbers are above segments */
+    color: var(--number-color); /* Use CSS variable for color */
+    white-space: nowrap; /* Prevent numbers from wrapping */
+}
+
+/* Bola de la ruleta */
+.game-ball {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20; /* Ensure ball is above everything */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+/* Herramientas y botones */
+.game-tools {
+    padding: 10px;
+    text-align: center;
+}
+
+.game-spin {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.game-spin:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.game-result {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Segmento ganador */
+.winning-segment {
+    box-shadow: inset 0 0 20px gold, 0 0 20px gold;
+    z-index: 5;
+}
+
+/* Marcadores de apuesta */
+.game-marker {
+    position: absolute;
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 10px;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+
+.marker-1-12 { background-color: rgba(0, 100, 0, 0.7); }
+.marker-even { background-color: rgba(0, 0, 100, 0.7); }
+.marker-red { background-color: rgba(200, 0, 0, 0.7); }
+.marker-black { background-color: rgba(0, 0, 0, 0.7); }
+.marker-odd { background-color: rgba(100, 100, 0, 0.7); }
+.marker-1-18 { background-color: rgba(100, 0, 100, 0.7); }
+.marker-19-36 { background-color: rgba(0, 100, 100, 0.7); }
+.roulette-selectors {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.roulette-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+
+.roulette-numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.roulette-number {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.roulette-number:hover {
+  transform: scale(1.1);
+}
+
+.roulette-zero {
+  background: #37ff37;
+
+}
+.roulette-green {
+  background: #008000;
+}
+
+.roulette-red {
+  background: #FF0000;
+}
+
+.roulette-black {
+  background: #000000;
+}
+
+.roulette-external-bets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.roulette-external-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.roulette-external {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+.roulette-1-18, .roulette-19-36 {
+  background: #2E8B57;
+}
+
+.roulette-even, .roulette-odd {
+  background: #1E90FF;
+}
+
+.roulette-red {
+  background: #FF0000;
+}
+
+.roulette-black {
+  background: #000000;
+}
+
+.roulette-dozen1, .roulette-dozen2, .roulette-dozen3 {
+  background: #FF8C00;
+}
+
+.roulette-column1, .roulette-column2, .roulette-column3 {
+  background: #9932CC;
+}
+
+.roulette-controls {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.roulette-amount {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100px;
+}
+.roulette-table table{
+      border: #333232 1px solid;
+}
+.roulette-table td, th {
+      padding:10px;
+}
+
+.roulette-clear-button {
+  background: #f44336;
+}
+
+.small-pokemon-pack {
+  width: auto; /* O el tamaño que desees, por ejemplo, 50% */
+  height: 150px; /* Mantiene la proporción de la imagen */
+}
+.small-pokemon-booster {
+  width: auto; /* O el tamaño que desees, por ejemplo, 50% */
+  height: 200px; /* Mantiene la proporción de la imagen */
+}
+.psgo-journey {
+    background-image: url('../media/journey.png');
+}

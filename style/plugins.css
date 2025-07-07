@@ -1,0 +1,1014 @@
+/* Estilos del juego del UNO */
+.game-button {
+    border: none;
+    background: none;
+    padding: 0; /* Remueve cualquier padding predeterminado del botón */
+    cursor: pointer; /* Indica que es clickeable */
+}
+.uno {
+  background: #0f172a; /* Azul medianoche oscuro */
+  color: #e2e8f0; /* Texto claro */
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Franja lateral izquierda y efectos */
+.uno::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+}
+
+/* Modo Normal */
+.uno-normal::before {
+  background: #38bdf8; /* Azul celeste */
+}
+
+.uno-normal .mode-indicator {
+  color: #38bdf8;
+}
+
+/* Modo Mezclado */
+.uno-mixed::before {
+  background: #a855f7; /* Morado */
+}
+
+.uno-mixed .mode-indicator {
+  color: #a855f7;
+}
+
+/* Modo All Wild - Arcoiris */
+.uno-allwild::before {
+  background: linear-gradient(to bottom, 
+    #ef4444, /* Rojo */
+    #f97316, /* Naranja */
+    #eab308, /* Amarillo */
+    #22c55e, /* Verde */
+    #3b82f6, /* Azul */
+    #8b5cf6, /* Índigo */
+    #ec4899  /* Violeta */
+  );
+}
+
+.uno-allwild .mode-indicator {
+  background: linear-gradient(to right, 
+    #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Modo No Mercy */
+.uno-nomercy::before {
+  background: #ef4444; /* Rojo */
+}
+
+.uno-nomercy .mode-indicator {
+  color: #ef4444;
+}
+
+/* Elementos comunes */
+.uno .mode-indicator {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.uno .players-count {
+  font-weight: bold;
+  color: #555;
+}
+
+.uno button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0 5px;
+}
+
+.uno button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.uno-join-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.uno-leave-btn {
+  background: #f44336;
+  color: white;
+}
+
+.uno-info-btn {
+  background: #2196f3;
+  color: white;
+}
+
+.uno-players-btn {
+  background: #ff9800;
+  color: white;
+}
+.uno-game-container {
+  background: #1a1a2e; /* Fondo azul oscuro */
+  border-radius: 16px;
+  padding: 0;
+  margin: 10px 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo para la tabla */
+.uno-game-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #16213e;
+}
+
+/* Estilo para las celdas */
+.uno-game-cell {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+/* Estilo para el área de cartas */
+.uno-cards-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  margin: 8px 0;
+}
+
+/* Estilo para el área de jugadores */
+.uno-players-area {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.uno-players-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.uno-players-area::-webkit-scrollbar-thumb {
+  background: #4cc9f0;
+  border-radius: 3px;
+}
+
+/* Estilo para los títulos */
+.uno-title {
+  color: #e2e8f0;
+  font-size: 18px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Estilo para la lista de jugadores */
+.uno-player-list {
+  color: #e2e8f0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.uno-player-list strong {
+  font-weight: 600;
+}
+
+/* Estilo para los botones */
+.uno-action-button {
+  background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.uno-action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+}
+
+/* Estilo para las cartas */
+.uno-card-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.uno-card-button:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+/* Estilos comunes para TODAS las cartas UNO */
+/* Esto se aplica a cualquier elemento con la clase .uno-card */
+.uno-card {
+    width: 63px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ajusta la imagen de fondo para cubrir el div sin distorsión, puede recortar */
+    background-position: center; /* Centra la imagen de fondo */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sutil sombra */
+    border-radius: 5px; /* Bordes ligeramente redondeados */
+    margin: 5px; /* Espaciado entre cartas */
+    display: block; /* Asegura que cada carta ocupe su propia línea si no usas flexbox/grid */
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased; /* Para navegadores WebKit/Blink */
+    -moz-osx-font-smoothing: grayscale; /* Para Firefox */
+}
+/* Estilos para el número */
+.card-value {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    position: fixed;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
+    line-height: 1;
+    z-index: 2;
+    top: 20px;
+    align-items: anchor-center;
+    right: 15px;
+    /* Para los números pequeños de las esquinas, necesitarías más <span> y posicionamiento absolute */
+}
+.main-value {
+    font-size: 3.5em; /* Un poco más grande, ajusta si es necesario */
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%); /* Centra el número usando su propio tamaño */
+}
+
+/* Estilo para el número de la esquina superior izquierda */
+.corner-top-left {
+    font-size: 1.2em;
+    top: 0.1em;
+    left: -25%;
+}
+
+/* Estilo para el número de la esquina inferior derecha (rotado) */
+.corner-bottom-right {
+    font-size: 1.2em; /* Tamaño para la esquina */
+    bottom: 0.2em; /* Distancia desde el borde inferior */
+    right: 0.25em; /* Distancia desde el borde derecho */
+    transform: rotate(180deg); /* ¡Rotación de 180 grados! */
+}
+.uno-card.number-card {
+    background-image: url('../media/uno/template-image.png'); /* ¡Tu nueva imagen base! */
+}
+
+/**
+    Wild Cards
+**/
+.uno-card.wild-reverse {
+    background-image: url('../media/uno/wild-reverse.png');
+}
+.uno-card.wild-double-skip {
+    background-image: url('../media/uno/wild-double-skip.png');
+}
+.uno-card.wild-draw-four {
+    background-image: url('../media/uno/wild-add-four.jpg');
+}
+.uno-card.wild-target-draw-two {
+    background-image: url('../media/uno/wild-target-add-two.png');
+}
+.uno-card.wild-target-draw-four {
+    background-image: url('../media/uno/wild-target-draw-four.jpg');
+}
+.uno-card.wild-skip {
+    background-image: url('../media/uno/wild-skip.png');
+}
+.uno-card.wild-draw-two {
+    background-image: url('../media/uno/wild-add-two.png');
+}
+.uno-card.wild-force-swap {
+    background-image: url('../media/uno/wild-force-swap.png');
+}
+.uno-card.wild {
+    background-image: url('../media/uno/wild.png');
+}
+/**
+    Regular cards
+**/
+.uno-card.skip {
+    background-image: url('../media/uno/skip.jpg');
+}
+.uno-card.reverse {
+    background-image: url('../media/uno/reverse.jpg');
+}
+.uno-card.draw-two {
+    background-image: url('../media/uno/draw-two.jpg');
+}
+
+
+.uno-card.green {
+    filter: hue-rotate(120deg) saturate(110%) brightness(105%);
+}
+.uno-card.red {
+    filter: hue-rotate(0deg);
+}
+.uno-card.yellow {
+    filter: hue-rotate(60deg) saturate(80%) brightness(4);
+}
+.uno-card.blue {
+    filter: hue-rotate(240deg) saturate(120%) brightness(100%);
+}
+.uno-button {
+    border: none;
+    background: none;
+    padding: 0; /* Remueve cualquier padding predeterminado del botón */
+    cursor: pointer; /* Indica que es clickeable */
+}
+
+/* Estilos del baraja de poker  */
+
+.poker-card {
+    width: 71PX;
+    height: 100px; 
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center; /* Centra la imagen dentro del contenedor */
+    display: inline-block; /* Para que las cartas se muestren en línea y respeten el width/height */
+    margin: 5px; /* Espacio entre cartas */
+    border: 1px solid #CCCCCC; /* Borde sutil para visualización */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Sombra para efecto 3D */
+    vertical-align: top; /* Alinea las cartas por arriba en una fila */
+    /* Agregamos la transición para un efecto suave */
+    transition: background-image 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.poker-card:hover {
+    background-image: url('../media/poker/back.png'); /* Ruta a tu imagen de reverso */
+    transform: scale(1.05); /* Agranda la carta un 5% al pasar el cursor */
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4); /* Sombra más pronunciada */
+}
+
+.poker-card.back {
+    background-image: url('../media/poker/back.png'); /* Ruta a tu imagen de reverso */
+}
+/* Picas (Spades) */
+.spades-ace    { background-image: url('../media/poker/front-0.png'); }
+.spades-2     { background-image: url('../media/poker/front-1.png'); }
+.spades-3     { background-image: url('../media/poker/front-2.png'); }
+.spades-4     { background-image: url('../media/poker/front-3.png'); }
+.spades-5     { background-image: url('../media/poker/front-4.png'); }
+.spades-6     { background-image: url('../media/poker/front-5.png'); }
+.spades-7     { background-image: url('../media/poker/front-6.png'); }
+.spades-8     { background-image: url('../media/poker/front-7.png'); }
+.spades-9     { background-image: url('../media/poker/front-8.png'); }
+.spades-10    { background-image: url('../media/poker/front-9.png'); }
+.spades-jack  { background-image: url('../media/poker/front-10.png'); }
+.spades-queen { background-image: url('../media/poker/front-11.png'); }
+.spades-king   { background-image: url('../media/poker/front-12.png'); }
+
+/* Corazones (Hearts) */
+.hearts-ace   { background-image: url('../media/poker/front-13.png'); }
+.hearts-2     { background-image: url('../media/poker/front-14.png'); }
+.hearts-3     { background-image: url('../media/poker/front-15.png'); }
+.hearts-4     { background-image: url('../media/poker/front-16.png'); }
+.hearts-5     { background-image: url('../media/poker/front-17.png'); }
+.hearts-6     { background-image: url('../media/poker/front-18.png'); }
+.hearts-7     { background-image: url('../media/poker/front-19.png'); }
+.hearts-8     { background-image: url('../media/poker/front-20.png'); }
+.hearts-9     { background-image: url('../media/poker/front-21.png'); }
+.hearts-10    { background-image: url('../media/poker/front-22.png'); }
+.hearts-jack  { background-image: url('../media/poker/front-23.png'); }
+.hearts-queen { background-image: url('../media/poker/front-24.png'); }
+.hearts-king   { background-image: url('../media/poker/front-25.png'); }
+
+/* Tréboles (Clubs) */
+.clubs-ace   { background-image: url('../media/poker/front-26.png'); }
+.clubs-2     { background-image: url('../media/poker/front-27.png'); }
+.clubs-3     { background-image: url('../media/poker/front-28.png'); }
+.clubs-4     { background-image: url('../media/poker/front-29.png'); }
+.clubs-5     { background-image: url('../media/poker/front-30.png'); }
+.clubs-6     { background-image: url('../media/poker/front-31.png'); }
+.clubs-7     { background-image: url('../media/poker/front-32.png'); }
+.clubs-8     { background-image: url('../media/poker/front-33.png'); }
+.clubs-9     { background-image: url('../media/poker/front-34.png'); }
+.clubs-10    { background-image: url('../media/poker/front-35.png'); }
+.clubs-jack  { background-image: url('../media/poker/front-36.png'); }
+.clubs-queen { background-image: url('../media/poker/front-37.png'); }
+.clubs-king   { background-image: url('../media/poker/front-38.png'); }
+
+/* Diamantes (Diamonds) */
+.diamonds-ace    { background-image: url('../media/poker/front-39.png'); }
+.diamonds-2     { background-image: url('../media/poker/front-40.png'); }
+.diamonds-3     { background-image: url('../media/poker/front-41.png'); }
+.diamonds-4     { background-image: url('../media/poker/front-42.png'); }
+.diamonds-5     { background-image: url('../media/poker/front-43.png'); }
+.diamonds-6     { background-image: url('../media/poker/front-44.png'); }
+.diamonds-7     { background-image: url('../media/poker/front-45.png'); }
+.diamonds-8     { background-image: url('../media/poker/front-46.png'); }
+.diamonds-9     { background-image: url('../media/poker/front-47.png'); }
+.diamonds-10    { background-image: url('../media/poker/front-48.png'); }
+.diamonds-jack  { background-image: url('../media/poker/front-49.png'); }
+.diamonds-queen { background-image: url('../media/poker/front-50.png'); }
+.diamonds-king   { background-image: url('../media/poker/front-51.png'); }
+
+.blackjack-game {
+    background: linear-gradient(to bottom, #0a3d0a, #0e4e0e);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #d4af37;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.blackjack-game .mode-indicator {
+    font-size: 1.2em;
+    color: #d4af37;
+    margin: 5px 0;
+}
+
+.blackjack-actions button {
+    background: linear-gradient(to bottom, #d4af37, #f9d423);
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    margin: 5px;
+    color: #0a3d0a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.blackjack-actions button:hover {
+    background: linear-gradient(to bottom, #f9d423, #d4af37);
+    transform: translateY(-2px);
+}
+
+.betting-controls button {
+    background: linear-gradient(to bottom, #d4af37, #f9d423);
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    margin: 5px;
+    color: #0a3d0a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 14px;
+}
+
+.betting-controls button:hover {
+    background: linear-gradient(to bottom, #f9d423, #d4af37);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.betting-controls button:active {
+    transform: translateY(1px);
+}
+.blackjack-controls {
+    text-align: center;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.blackjack-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.poker-game {
+   background: linear-gradient(to bottom, #0a3d0a, #0e4e0e);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #d4af37;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+/* Botones de acción */
+.poker-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ---- BOTONES DE ACCIÓN (ESTILO CHIP) ---- */
+.poker-actions button {
+    background: radial-gradient(circle, #fff 30%, #f1f1f1 70%);
+    border: 2px solid #d4af37;
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: all 0.3s;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* Efecto hover para botones */
+.poker-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Colores temáticos para acciones */
+button[name="send"][value^="/poker fold"] {
+    background: radial-gradient(circle, #ff6b6b, #d40000);
+    color: white;
+}
+
+button[name="send"][value^="/poker call"] {
+    background: radial-gradient(circle, #70a1ff, #1e90ff);
+    color: white;
+}
+
+button[name="send"][value^="/poker raise"] {
+    background: radial-gradient(circle, #f6e58d, #f9ca24);
+    color: #000;
+}
+
+/* Secciones de información */
+.mode-indicator {
+    font-size: 1.5em;
+    margin: 15px 0;
+    color: #f1c40f;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.players-count {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin: 10px 0;
+}
+
+/* Efectos para ganadores/perdedores */
+.winner {
+    color: #2ecc71;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+.loser {
+    color: #e74c3c;
+    opacity: 0.8;
+}
+
+.pusher {
+    color: #3498db;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Botones de unión/salida */
+.poker-join-btn {
+    background: linear-gradient(to right, #27ae60, #2ecc71) !important;
+}
+
+.poker-leave-btn {
+    background: linear-gradient(to right, #e74c3c, #c0392b) !important;
+}
+
+.poker-players-btn, 
+.poker-info-btn {
+    background: linear-gradient(to right, #3498db, #2980b9) !important;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    
+    .poker-actions {
+        flex-direction: column;
+    }
+    
+    .poker-actions button {
+        width: 100%;
+    }
+}
+/* Estilos base para el juego de Go Fish */
+.gofish-game {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.gofish-game center {
+    text-align: center;
+}
+
+.gofish-game .mode-indicator {
+    font-size: 1.2em;
+    color: #f1c40f;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #34495e;
+}
+
+.gofish-game p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.gofish-game ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.gofish-game li {
+    padding: 5px 0;
+    border-bottom: 1px solid #34495e;
+}
+
+/* Estilos para los botones */
+.gofish-actions button,
+.gofish-game button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.gofish-actions button:hover,
+.gofish-game button:hover {
+    background-color: #2980b9;
+}
+
+.gofish-join-btn {
+    background-color: #2ecc71 !important;
+}
+
+.gofish-join-btn:hover {
+    background-color: #27ae60 !important;
+}
+
+.gofish-leave-btn {
+    background-color: #e74c3c !important;
+}
+
+.gofish-leave-btn:hover {
+    background-color: #c0392b !important;
+}
+
+/* Estilos para los formularios */
+.gofish-game form {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #34495e;
+    border-radius: 8px;
+}
+
+.gofish-game label {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 0.95em;
+}
+
+.gofish-game select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #7f8c8d;
+    background-color: #ecf0f1;
+    margin-right: 10px;
+}
+
+/* Estilos para los mensajes de resultado */
+.gofish-game .winner {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.gofish-game .loser {
+    color: #e74c3c;
+}
+
+/* Base para todas las cartas de lotería */
+.loteria-card {
+  width: 67px; /* Ancho de la carta */
+  height: 100px; /* Alto de la carta */
+  background-size: cover; /* La imagen de fondo cubrirá el área del div, recortando si es necesario.
+                            Usa 'contain' si prefieres que la imagen completa se muestre, sin recorte,
+                            aunque podría dejar espacio vacío si la relación de aspecto no coincide. */
+  background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
+  background-position: center center; /* Centra la imagen de fondo dentro del div */
+  display: inline-block; /* Permite que las cartas se coloquen en línea, una al lado de la otra */
+  margin: 5px; /* Espacio opcional entre las cartas */
+  border: 3px solid #ccc; /* Borde opcional para visualización */
+  vertical-align: top; /* Ayuda a alinear las cartas correctamente cuando están en línea */
+  /* Puedes añadir un box-shadow o lo que desees aquí para todas las cartas */
+}
+/* Estilo para la X cuando la carta está seleccionada */
+.loteria-card.selected::before {
+  content: 'X'; /* El carácter de la X */
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra la X perfectamente */
+  font-size: 50px; /* Tamaño de la X */
+  font-weight: bold;
+  color: red; /* Color de la X */
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo semi-transparente para la X */
+  border-radius: 50%; /* Opcional: para hacer el fondo circular */
+  width: 60px; /* Tamaño del fondo de la X */
+  height: 60px;
+  display: flex; /* Para centrar la X con flexbox */
+  justify-content: center;
+  align-items: center;
+  z-index: 2; /* Asegura que la X esté por encima de la imagen de la carta */
+  pointer-events: none; /* Permite que los clics pasen a la carta subyacente */
+  transition: opacity 0.2s ease-in-out; /* Transición suave para aparecer */
+}
+
+/* Si quieres que la X aparezca con una animación */
+.loteria-card:not(.selected)::before {
+    content: 'X'; /* Debe estar presente para la transición */
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    font-weight: bold;
+    color: red;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0; /* Oculta la X por defecto */
+}
+/* Definición de la imagen de fondo para cada carta por su número */
+.card-1 {
+  background-image: url('../media/loteria/1.jpg');
+}
+.card-2 {
+  background-image: url('../media/loteria/2.jpg');
+}
+.card-3 {
+  background-image: url('../media/loteria/3.jpg');
+}
+.card-4 {
+  background-image: url('../media/loteria/4.jpg');
+}
+.card-5 {
+  background-image: url('../media/loteria/5.jpg');
+}
+.card-6 {
+  background-image: url('../media/loteria/6.jpg');
+}
+.card-7 {
+  background-image: url('../media/loteria/7.jpg');
+}
+.card-8 {
+  background-image: url('../media/loteria/8.jpg');
+}
+.card-9 {
+  background-image: url('../media/loteria/9.jpg');
+}
+.card-10 {
+  background-image: url('../media/loteria/10.jpg');
+}
+.card-11 {
+  background-image: url('../media/loteria/11.jpg');
+}
+.card-12 {
+  background-image: url('../media/loteria/12.jpg');
+}
+.card-13 {
+  background-image: url('../media/loteria/13.jpg');
+}
+.card-14 {
+  background-image: url('../media/loteria/14.jpg');
+}
+.card-15 {
+  background-image: url('../media/loteria/15.jpg');
+}
+.card-16 {
+  background-image: url('../media/loteria/16.jpg');
+}
+.card-17 {
+  background-image: url('../media/loteria/17.jpg');
+}
+.card-18 {
+  background-image: url('../media/loteria/18.jpg');
+}
+.card-19 {
+  background-image: url('../media/loteria/19.jpg');
+}
+.card-20 {
+  background-image: url('../media/loteria/20.jpg');
+}
+.card-21 {
+  background-image: url('../media/loteria/21.jpg');
+}
+.card-22 {
+  background-image: url('../media/loteria/22.jpg');
+}
+.card-23 {
+  background-image: url('../media/loteria/23.jpg');
+}
+.card-24 {
+  background-image: url('../media/loteria/24.jpg');
+}
+.card-25 {
+  background-image: url('../media/loteria/25.jpg');
+}
+.card-26 {
+  background-image: url('../media/loteria/26.jpg');
+}
+.card-27 {
+  background-image: url('../media/loteria/27.jpg');
+}
+.card-28 {
+  background-image: url('../media/loteria/28.jpg');
+}
+.card-29 {
+  background-image: url('../media/loteria/29.jpg');
+}
+.card-30 {
+  background-image: url('../media/loteria/30.jpg');
+}
+.card-31 {
+  background-image: url('../media/loteria/31.jpg');
+}
+.card-32 {
+  background-image: url('../media/loteria/32.jpg');
+}
+.card-33 {
+  background-image: url('../media/loteria/33.jpg');
+}
+.card-34 {
+  background-image: url('../media/loteria/34.jpg');
+}
+.card-35 {
+  background-image: url('../media/loteria/35.jpg');
+}
+.card-36 {
+  background-image: url('../media/loteria/36.jpg');
+}
+.card-37 {
+  background-image: url('../media/loteria/37.jpg');
+}
+.card-38 {
+  background-image: url('../media/loteria/38.jpg');
+}
+.card-39 {
+  background-image: url('../media/loteria/39.jpg');
+}
+.card-40 {
+  background-image: url('../media/loteria/40.jpg');
+}
+.card-41 {
+  background-image: url('../media/loteria/41.jpg');
+}
+.card-42 {
+  background-image: url('../media/loteria/42.jpg');
+}
+.card-43 {
+  background-image: url('../media/loteria/43.jpg');
+}
+.card-44 {
+  background-image: url('../media/loteria/44.jpg');
+}
+.card-45 {
+  background-image: url('../media/loteria/45.jpg');
+}
+.card-46 {
+  background-image: url('../media/loteria/46.jpg');
+}
+.card-47 {
+  background-image: url('../media/loteria/47.jpg');
+}
+.card-48 {
+  background-image: url('../media/loteria/48.jpg');
+}
+.card-49 {
+  background-image: url('../media/loteria/49.jpg');
+}
+.card-50 {
+  background-image: url('../media/loteria/50.jpg');
+}
+.card-51 {
+  background-image: url('../media/loteria/51.jpg');
+}
+.card-52 {
+  background-image: url('../media/loteria/52.jpg');
+}
+.card-53 {
+  background-image: url('../media/loteria/53.jpg');
+}
+.card-54 {
+  background-image: url('../media/loteria/54.jpg');
+}
+
+.loteria-game {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.current-card {
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.player-board {
+    background-color: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+
+.loteria-summary {
+    background-color: white;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.loteria-summary h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.loteria-summary ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}

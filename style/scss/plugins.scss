@@ -1,0 +1,837 @@
+// Importar módulos de Sass necesarios
+@use "sass:math"; // Para operaciones matemáticas
+
+// --- Variables Globales ---
+// Colores base para los juegos
+$color-uno-dark: #0f172a;
+$color-uno-text-light: #e2e8f0;
+$color-uno-blue-light: #38bdf8;
+$color-uno-purple: #a855f7;
+$color-uno-red: #ef4444;
+$color-uno-green-btn: #4caf50;
+$color-uno-red-btn: #f44336;
+$color-uno-info-btn: #2196f3;
+$color-uno-players-btn: #ff9800;
+
+$color-blackjack-dark-green: #0a3d0a;
+$color-blackjack-light-green: #0e4e0e;
+$color-blackjack-gold: #d4af37;
+$color-blackjack-light-gold: #f9d423;
+
+$color-gofish-dark-blue: #2c3e50;
+$color-gofish-text-light: #ecf0f1;
+$color-gofish-yellow: #f1c40f;
+$color-gofish-gray-blue: #34495e;
+$color-gofish-blue-btn: #3498db;
+$color-gofish-blue-btn-hover: #2980b9;
+$color-gofish-green-btn: #2ecc71;
+$color-gofish-green-btn-hover: #27ae60;
+$color-gofish-red-btn: #e74c3c;
+$color-gofish-red-btn-hover: #c0392b;
+
+$color-loteria-light-gray: #f5f5f5;
+$color-loteria-dark-gray: #333;
+$color-loteria-light-border: #eee;
+
+// Tamaños comunes
+$border-radius-small: 5px;
+$border-radius-medium: 10px;
+$border-radius-large: 20px;
+$box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
+$box-shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+// --- Mixin para botones de juego ---
+@mixin game-button-base {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+@mixin button-style($bg-color, $text-color: white) {
+    border: none;
+    padding: 8px 16px;
+    border-radius: $border-radius-large;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0 5px;
+    background: $bg-color;
+    color: $text-color;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+}
+
+// --- Estilos del juego del UNO ---
+.game-button {
+    @include game-button-base;
+}
+
+.uno {
+    background: $color-uno-dark;
+    color: $color-uno-text-light;
+    border-radius: $border-radius-medium;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: $box-shadow-medium;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+    }
+
+    .mode-indicator {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: $border-radius-large;
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    button {
+        border: none;
+        padding: 8px 16px;
+        border-radius: $border-radius-large;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin: 0 5px;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    }
+}
+
+.uno-normal {
+    &::before {
+        background: $color-uno-blue-light;
+    }
+    .mode-indicator {
+        color: $color-uno-blue-light;
+    }
+}
+
+.uno-mixed {
+    &::before {
+        background: $color-uno-purple;
+    }
+    .mode-indicator {
+        color: $color-uno-purple;
+    }
+}
+
+.uno-allwild {
+    &::before {
+        background: linear-gradient(to bottom,
+            #ef4444, /* Rojo */
+            #f97316, /* Naranja */
+            #eab308, /* Amarillo */
+            #22c55e, /* Verde */
+            #3b82f6, /* Azul */
+            #8b5cf6, /* Índigo */
+            #ec4899  /* Violeta */
+        );
+    }
+    .mode-indicator {
+        background: linear-gradient(to right,
+            #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.uno-nomercy {
+    &::before {
+        background: $color-uno-red;
+    }
+    .mode-indicator {
+        color: $color-uno-red;
+    }
+}
+
+.uno .players-count {
+    font-weight: bold;
+    color: #555; // Este color no estaba en variables, se mantiene
+}
+
+.uno-join-btn {
+    @include button-style($color-uno-green-btn);
+}
+.uno-leave-btn {
+    @include button-style($color-uno-red-btn);
+}
+.uno-info-btn {
+    @include button-style($color-uno-info-btn);
+}
+.uno-players-btn {
+    @include button-style($color-uno-players-btn);
+}
+
+.uno-game-container {
+    background: #1a1a2e; // No estaba en variables, se mantiene
+    border-radius: 16px;
+    padding: 0;
+    margin: 10px 0;
+    box-shadow: $box-shadow-heavy;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.uno-game-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #16213e; // No estaba en variables, se mantiene
+}
+
+.uno-game-cell {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.uno-cards-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin: 8px 0;
+}
+
+.uno-players-area {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #4cc9f0; // No estaba en variables, se mantiene
+        border-radius: 3px;
+    }
+}
+
+.uno-title {
+    color: $color-uno-text-light;
+    font-size: 18px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.uno-player-list {
+    color: $color-uno-text-light;
+    font-size: 15px;
+    line-height: 1.6;
+
+    strong {
+        font-weight: 600;
+    }
+}
+
+.uno-action-button {
+    background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%); // No estaba en variables, se mantiene
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 8px;
+    box-shadow: $box-shadow-light;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%); // No estaba en variables, se mantiene
+    }
+}
+
+.uno-card-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-5px) scale(1.05);
+    }
+}
+
+.uno-card {
+    width: 63px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); // No estaba en variables, se mantiene
+    border-radius: $border-radius-small;
+    margin: 5px;
+    display: block;
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.card-value {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    position: fixed;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7); // No estaba en variables, se mantiene
+    line-height: 1;
+    z-index: 2;
+    top: 20px;
+    align-items: anchor-center;
+    right: 15px;
+}
+.main-value {
+    font-size: 3.5em;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+.corner-top-left {
+    font-size: 1.2em;
+    top: 0.1em;
+    left: -25%;
+}
+.corner-bottom-right {
+    font-size: 1.2em;
+    bottom: 0.2em;
+    right: 0.25em;
+    transform: rotate(180deg);
+}
+
+.uno-card.number-card {
+    background-image: url('../../media/uno/template-image.png');
+}
+
+// Map para cartas comodín
+$wild-cards: (
+    reverse: 'wild-reverse.png',
+    double-skip: 'wild-double-skip.png',
+    draw-four: 'wild-add-four.jpg',
+    target-draw-two: 'wild-target-add-two.png',
+    target-draw-four: 'wild-target-draw-four.jpg',
+    skip: 'wild-skip.png',
+    draw-two: 'wild-add-two.png',
+    force-swap: 'wild-force-swap.png',
+    wild: 'wild.png'
+);
+
+// Bucle para generar clases de cartas comodín
+@each $name, $image in $wild-cards {
+    .uno-card.wild-#{$name} {
+        background-image: url('../../media/uno/#{$image}');
+    }
+}
+
+// Map para cartas regulares
+$regular-cards: (
+    skip: 'skip.jpg',
+    reverse: 'reverse.jpg',
+    draw-two: 'draw-two.jpg'
+);
+
+// Bucle para generar clases de cartas regulares
+@each $name, $image in $regular-cards {
+    .uno-card.#{$name} {
+        background-image: url('../../media/uno/#{$image}');
+    }
+}
+
+// Colores de filtro para cartas
+.uno-card.green {
+    filter: hue-rotate(120deg) saturate(110%) brightness(105%);
+}
+.uno-card.red {
+    filter: hue-rotate(0deg);
+}
+.uno-card.yellow {
+    filter: hue-rotate(60deg) saturate(80%) brightness(4);
+}
+.uno-card.blue {
+    filter: hue-rotate(240deg) saturate(120%) brightness(100%);
+}
+
+.uno-button {
+    @include game-button-base;
+}
+
+// --- Estilos del baraja de poker ---
+.poker-card {
+    width: 71px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    margin: 5px;
+    border: 1px solid #CCCCCC; // No estaba en variables, se mantiene
+    border-radius: $border-radius-small;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2); // No estaba en variables, se mantiene
+    vertical-align: top;
+    transition: background-image 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        background-image: url('../../media/poker/back.png');
+        transform: scale(1.05);
+        box-shadow: 4px 4px 10px rgba(0,0,0,0.4); // No estaba en variables, se mantiene
+    }
+    &.back {
+        background-image: url('../../media/poker/back.png');
+    }
+}
+
+// Mapas para los palos y valores de las cartas de póker
+$suits: (spades, hearts, clubs, diamonds);
+$card-values: (
+    ace: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6, 8: 7, 9: 8, 10: 9,
+    jack: 10, queen: 11, king: 12
+); // Mapeo de valores a índices de imagen
+
+@each $suit-name in $suits {
+    @each $value-name, $index in $card-values {
+        // Calcular el índice de la imagen globalmente (0-51)
+        // Cada palo tiene 13 cartas, por lo que el offset es (índice_palo * 13)
+        $suit-index: 0;
+        @if $suit-name == spades { $suit-index: 0; }
+        @else if $suit-name == hearts { $suit-index: 1; }
+        @else if $suit-name == clubs { $suit-index: 2; }
+        @else if $suit-name == diamonds { $suit-index: 3; }
+
+        $image-number: $index + ($suit-index * 13);
+
+        .#{$suit-name}-#{$value-name} { // Ejemplo: .sace, .h2, .cjack
+            background-image: url('../../media/poker/front-#{$image-number}.png');
+        }
+    }
+}
+
+// Blackjack
+.blackjack-game {
+    background: linear-gradient(to bottom, $color-blackjack-dark-green, $color-blackjack-light-green);
+    color: white;
+    padding: 15px;
+    border-radius: $border-radius-medium;
+    border: 2px solid $color-blackjack-gold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // No estaba en variables, se mantiene
+    .mode-indicator {
+        font-size: 1.2em;
+        color: $color-blackjack-gold;
+        margin: 5px 0;
+    }
+    .blackjack-actions button,
+    .betting-controls button {
+        background: linear-gradient(to bottom, $color-blackjack-gold, $color-blackjack-light-gold);
+        border: none;
+        border-radius: $border-radius-small;
+        padding: 8px 15px;
+        margin: 5px;
+        color: $color-blackjack-dark-green;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2); // No estaba en variables, se mantiene
+        font-size: 14px;
+        &:hover {
+            background: linear-gradient(to bottom, $color-blackjack-light-gold, $color-blackjack-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); // No estaba en variables, se mantiene
+        }
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}
+
+.blackjack-controls {
+    text-align: center;
+    padding: 10px;
+    background: #f5f5f5; // No estaba en variables, se mantiene
+    border-radius: $border-radius-small;
+    margin: 10px 0;
+    button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+}
+
+// Poker
+.poker-game {
+    background: linear-gradient(to bottom, $color-blackjack-dark-green, $color-blackjack-light-green);
+    color: white;
+    padding: 15px;
+    border-radius: $border-radius-medium;
+    border: 2px solid $color-blackjack-gold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // No estaba en variables, se mantiene
+    .poker-actions {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        button {
+            background: radial-gradient(circle, #fff 30%, #f1f1f1 70%); // No estaba en variables, se mantiene
+            border: 2px solid $color-blackjack-gold;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: $border-radius-large;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); // No estaba en variables, se mantiene
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4); // No estaba en variables, se mantiene
+            }
+        }
+        button[name="send"][value^="/poker fold"] {
+            background: radial-gradient(circle, #ff6b6b, #d40000); // No estaba en variables, se mantiene
+            color: white;
+        }
+        button[name="send"][value^="/poker call"] {
+            background: radial-gradient(circle, #70a1ff, #1e90ff); // No estaba en variables, se mantiene
+            color: white;
+        }
+        button[name="send"][value^="/poker raise"] {
+            background: radial-gradient(circle, #f6e58d, #f9ca24); // No estaba en variables, se mantiene
+            color: #000;
+        }
+    }
+    .mode-indicator {
+        font-size: 1.5em;
+        margin: 15px 0;
+        color: $color-gofish-yellow;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // No estaba en variables, se mantiene
+        text-align: center;
+    }
+    .players-count {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 5px 15px;
+        border-radius: $border-radius-large;
+        margin: 10px 0;
+    }
+    .winner {
+        color: #2ecc71; // No estaba en variables, se mantiene
+        font-weight: bold;
+        animation: pulse 1.5s infinite;
+    }
+    .loser {
+        color: #e74c3c; // No estaba en variables, se mantiene
+        opacity: 0.8;
+    }
+    .pusher {
+        color: #3498db; // No estaba en variables, se mantiene
+    }
+    .poker-join-btn {
+        background: linear-gradient(to right, #27ae60, #2ecc71) !important; // No estaba en variables, se mantiene
+    }
+    .poker-leave-btn {
+        background: linear-gradient(to right, #e74c3c, #c0392b) !important; // No estaba en variables, se mantiene
+    }
+    .poker-players-btn,
+    .poker-info-btn {
+        background: linear-gradient(to right, #3498db, #2980b9) !important; // No estaba en variables, se mantiene
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@media (max-width: 500px) {
+    .poker-actions {
+        flex-direction: column;
+        button {
+            width: 100%;
+        }
+    }
+}
+
+// Go Fish
+.gofish-game {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: $color-gofish-dark-blue;
+    color: $color-gofish-text-light;
+    padding: 15px;
+    border-radius: $border-radius-medium;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // No estaba en variables, se mantiene
+    center {
+        text-align: center;
+    }
+    .mode-indicator {
+        font-size: 1.2em;
+        color: $color-gofish-yellow;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid $color-gofish-gray-blue;
+    }
+    p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 10px 0;
+    }
+    li {
+        padding: 5px 0;
+        border-bottom: 1px solid $color-gofish-gray-blue;
+    }
+    .gofish-actions button,
+    button { // Selecciona todos los botones dentro de .gofish-game
+        background-color: $color-gofish-blue-btn;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        margin: 5px;
+        border-radius: $border-radius-small;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: background-color 0.3s;
+        &:hover {
+            background-color: $color-gofish-blue-btn-hover;
+        }
+    }
+    .gofish-join-btn {
+        background-color: $color-gofish-green-btn !important;
+        &:hover {
+            background-color: $color-gofish-green-btn-hover !important;
+        }
+    }
+    .gofish-leave-btn {
+        background-color: $color-gofish-red-btn !important;
+        &:hover {
+            background-color: $color-gofish-red-btn-hover !important;
+        }
+    }
+    form {
+        margin: 15px 0;
+        padding: 15px;
+        background-color: $color-gofish-gray-blue;
+        border-radius: 8px;
+    }
+    label {
+        display: inline-block;
+        margin: 0 10px;
+        font-size: 0.95em;
+    }
+    select {
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #7f8c8d; // No estaba en variables, se mantiene
+        background-color: $color-gofish-text-light;
+        margin-right: 10px;
+    }
+    .winner {
+        color: $color-gofish-green-btn;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .loser {
+        color: $color-gofish-red-btn;
+    }
+}
+
+// Lotería
+.loteria-card {
+    width: 67px;
+    height: 100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: inline-block;
+    margin: 5px;
+    border: 3px solid #ccc; // No estaba en variables, se mantiene
+    vertical-align: top;
+
+    &.selected::before {
+        content: 'X';
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 50px;
+        font-weight: bold;
+        color: red;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    &:not(.selected)::before {
+        content: 'X';
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 50px;
+        font-weight: bold;
+        color: red;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0;
+    }
+}
+
+// Bucle para generar las clases de las cartas de lotería
+@for $i from 1 through 54 {
+    .card-#{$i} {
+        background-image: url('../../media/loteria/#{$i}.jpg');
+    }
+}
+
+.loteria-game {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: $color-loteria-light-gray;
+    border-radius: $border-radius-medium;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); // No estaba en variables, se mantiene
+
+    .current-card {
+        text-align: center;
+        margin: 20px 0;
+        padding: 15px;
+        background-color: white;
+        border-radius: $border-radius-medium;
+        box-shadow: $box-shadow-light;
+    }
+
+    .player-board {
+        background-color: white;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: $border-radius-medium;
+        box-shadow: $box-shadow-light;
+    }
+
+    .board-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin: 15px 0;
+    }
+
+    .loteria-summary {
+        background-color: white;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: $border-radius-medium;
+        box-shadow: $box-shadow-light;
+        h3 {
+            margin-top: 0;
+            color: $color-loteria-dark-gray;
+            border-bottom: 1px solid $color-loteria-light-border;
+            padding-bottom: 8px;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+    }
+}
+    .client-game {
+        background-color: #212121; /* Dark background for a night theme */
+        color: #e0e0e0; /* Light text for contrast */
+        padding: 15px;
+        border-radius: 8px; /* Slightly rounded corners */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A clean, modern font */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Subtle shadow for depth */
+    }
+
+    .client-game h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.5em; /* Slightly larger heading */
+    }
+
+    .client-game button {
+        background-color: #4CAF50; /* Green join button */
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease; /* Smooth hover effect */
+    }
+
+    .client-game button:hover {
+        background-color: #43a047; /* Darker green on hover */
+    }
+
+    .client-game hr {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    /* Adjusting specific text colors for better night theme contrast */
+    .client-game h2 span {
+        color: #66bb6a; /* Adjusted green for "Fantasmano ha empezado..." */
+    }
+    .client-game b span[style*="color: #0bd4eb"] { /* Targeting "Jugadores" label */
+        color: #81d4fa; /* Lighter blue for better contrast */
+    }
+
+    .client-game span[style*="color: blue"] { /* Targeting "Formato" label */
+        color: #90caf9; /* Lighter blue for better contrast */
+    }
+
+    .client-game span[style*="color: #b40404"] {
+        color: #ef9a9a; /* Lighter red for better contrast */
+    }

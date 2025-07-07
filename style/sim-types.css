@@ -1,0 +1,428 @@
+/* --- Estilos Base Globales para todos los botones .movemenu --- */
+.movemenu button {
+    /* Reiniciar estilos de botón predeterminados */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: left; /* Alinea el texto a la izquierda */
+
+    min-height: 55px; /* Altura cómoda */
+    padding: 0; /* Sin padding en el botón principal, lo añadiremos a las secciones */
+
+    border-radius: 12px; /* Esquinas redondeadas como en el juego */
+    overflow: hidden; /* Crucial para los elementos internos y efectos */
+    position: relative; /* Para posicionar elementos internos */
+    font-family: 'Roboto', 'Arial', sans-serif; /* Fuente moderna (recuerda importarla) */
+    font-size: 1.1em; /* Tamaño de fuente para el nombre del movimiento */
+    font-weight: bold; /* Nombre del movimiento en negrita */
+    color: #333; /* Color de texto predeterminado para el área blanca */
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave para profundidad */
+    transition: all 0.15s ease-in-out; /* Transiciones suaves para hover/active */
+    margin-bottom: 8px; /* Espaciado entre botones horizontales */
+
+    /* La barra de color de tipo será el background principal del botón. */
+    /* El área blanca será un pseudo-elemento ::before o un span superpuesto */
+}
+
+/* Pseudo-elemento para el fondo blanco donde va el nombre del movimiento y los PP */
+/* Esto se superpondrá a la barra de color del botón */
+.movemenu button::before {
+    content: '';
+    position: absolute;
+    top: 2px; /* Un pequeño borde en la parte superior */
+    left: 2px; /* Un pequeño borde a la izquierda */
+    bottom: 2px; /* Un pequeño borde en la parte inferior */
+    width: calc(100% - 90px); /* Ancho del área blanca, dejando espacio para el tipo a la derecha */
+    border-radius: 10px; /* Ligeramente más pequeño que el botón para el efecto de borde */
+    z-index: 1; /* Asegura que esté por encima del fondo de color del botón */
+    transition: width 0.15s ease-in-out; /* Transición para posible barra de progreso de PP */
+}
+
+/* Estilos para el texto del nombre del movimiento y los PP */
+.movemenu button strong { /* Asumiendo que el nombre del movimiento está en un <strong> o es el primer texto directo */
+    position: relative;
+    z-index: 2; /* Asegura que el texto esté por encima del fondo blanco */
+    padding-left: 18px; /* Padding para el nombre del movimiento */
+    display: inline-block; /* Para controlar el padding y el z-index */
+    white-space: nowrap; /* Evita que el nombre del movimiento se rompa */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Puntos suspensivos si el texto es demasiado largo */
+    max-width: calc(100% - 150px); /* Ajusta el ancho máximo del nombre del movimiento */
+    margin-right: 10px; /* Espacio entre el nombre y el PP */
+}
+
+/* Estilos para el texto de los PP (ej. 24/24) */
+.movemenu button .pp { /* Tu HTML usa <small class="pp"> */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9em;
+    font-weight: normal;
+	background-color: black;
+    color: #666; /* Color más suave para los PP */
+    white-space: nowrap; /* Evita que los PP se rompan */
+}
+.movemenu button small .pp{
+	background-color: black;
+	color: white;
+}
+/* Estilos para el texto del tipo (ej. Fairy) */
+.movemenu button .type { /* Tu HTML usa <small class="type"> */
+    position: relative;
+    z-index: 2; /* Asegura que el texto del tipo esté encima del color */
+    left: 10px; /* Posiciona el tipo en el extremo derecho */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85em;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: white; /* Color blanco para el texto del tipo en el fondo de color */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombra para mejor legibilidad */
+}
+
+/* Ajuste para el <br> en tu HTML: ocultarlo o ajustarlo si causa un salto de línea indeseado */
+.movemenu button br {
+    display: none; /* Oculta el salto de línea si ya no es necesario */
+}
+
+
+/* --- Efectos Hover y Active para todos los botones --- */
+.movemenu button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Ligero levantamiento */
+}
+
+.movemenu button:active,
+.movemenu button.pressed {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    filter: brightness(0.95); /* Ligeramente más oscuro al presionar */
+}
+/* --- Estilos Específicos por Tipo (Adaptados de sim-types.css) --- */
+
+/* Nota: Los comentarios originales de sim-types.css se mantienen para referencia */
+
+/* Type-Normal */
+.movemenu button.type-Normal {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(60,14%,84%), hsl(60,14%,70%));
+    border: 2px solid hsl(60,14%,70%); /* El borde del botón general */
+}
+/* No necesitamos cambiar el color de .movemenu button.type-Normal small { color: hsl(60,14%,41%); } aquí, ya que el color del tipo será blanco y los PP son grises */
+.movemenu button.type-Normal:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(60,14%,77%), hsl(60,14%,60%)); /* Adjusted for right bar */
+    border-color: hsl(60,14%,41%);
+}
+.movemenu button.type-Normal:active, .movemenu button.type-Normal.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(60,14%,77%), hsl(60,14%,83%));
+    border-color: hsl(60,14%,41%);
+}
+
+/* Type-Fighting */
+.movemenu button.type-Fighting {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(3,40%,84%), hsl(3,40%,70%));
+    border: 2px solid hsl(3,40%,70%);
+}
+.movemenu button.type-Fighting:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(3,40%,77%), hsl(3,40%,60%));
+    border-color: hsl(3,40%,41%);
+}
+.movemenu button.type-Fighting:active, .movemenu button.type-Fighting.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(3,40%,77%), hsl(3,40%,83%));
+    border-color: hsl(3,40%,41%);
+}
+
+/* Type-Flying */
+.movemenu button.type-Flying {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(255,20%,84%), hsl(255,20%,70%));
+    border: 2px solid hsl(255,20%,70%);
+}
+.movemenu button.type-Flying:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(255,20%,77%), hsl(255,20%,60%));
+    border-color: hsl(255,20%,41%);
+}
+.movemenu button.type-Flying:active, .movemenu button.type-Flying.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(255,20%,77%), hsl(255,20%,83%));
+    border-color: hsl(255,20%,41%);
+}
+
+/* Type-Poison */
+.movemenu button.type-Poison {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(300,30%,84%), hsl(300,30%,70%));
+    border: 2px solid hsl(300,30%,70%);
+}
+.movemenu button.type-Poison:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(300,30%,77%), hsl(300,30%,60%));
+    border-color: hsl(300,30%,41%);
+}
+.movemenu button.type-Poison:active, .movemenu button.type-Poison.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(300,30%,77%), hsl(300,30%,83%));
+    border-color: hsl(300,30%,41%);
+}
+
+/* Type-Ground */
+.movemenu button.type-Ground {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(44,27%,84%), hsl(44,27%,70%));
+    border: 2px solid hsl(44,27%,70%);
+}
+.movemenu button.type-Ground:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(44,27%,77%), hsl(44,27%,60%));
+    border-color: hsl(44,27%,41%);
+}
+.movemenu button.type-Ground:active, .movemenu button.type-Ground.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(44,27%,77%), hsl(44,27%,83%));
+    border-color: hsl(44,27%,41%);
+}
+
+/* Type-Rock */
+.movemenu button.type-Rock {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(49,35%,84%), hsl(49,35%,70%));
+    border: 2px solid hsl(49,35%,70%);
+}
+.movemenu button.type-Rock:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(49,35%,77%), hsl(49,35%,60%));
+    border-color: hsl(49,35%,41%);
+}
+.movemenu button.type-Rock:active, .movemenu button.type-Rock.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(49,35%,77%), hsl(49,35%,83%));
+    border-color: hsl(49,35%,41%);
+}
+
+/* Type-Bug */
+.movemenu button.type-Bug {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(66,42%,84%), hsl(66,42%,70%));
+    border: 2px solid hsl(66,42%,70%);
+}
+.movemenu button.type-Bug:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(66,42%,77%), hsl(66,42%,60%));
+    border-color: hsl(66,42%,41%);
+}
+.movemenu button.type-Bug:active, .movemenu button.type-Bug.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(66,42%,77%), hsl(66,42%,83%));
+    border-color: hsl(66,42%,41%);
+}
+
+/* Type-Ghost */
+.movemenu button.type-Ghost {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(262,21%,84%), hsl(262,21%,70%));
+    border: 2px solid hsl(262,21%,70%);
+}
+.movemenu button.type-Ghost:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(262,21%,77%), hsl(262,21%,60%));
+    border-color: hsl(262,21%,41%);
+}
+.movemenu button.type-Ghost:active, .movemenu button.type-Ghost.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(262,21%,77%), hsl(262,21%,83%));
+    border-color: hsl(262,21%,41%);
+}
+
+/* Type-Steel */
+.movemenu button.type-Steel {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(240,6%,84%), hsl(240,6%,70%));
+    border: 2px solid hsl(240,6%,70%);
+}
+.movemenu button.type-Steel:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(240,6%,77%), hsl(240,6%,60%));
+    border-color: hsl(240,6%,41%);
+}
+.movemenu button.type-Steel:active, .movemenu button.type-Steel.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(240,6%,77%), hsl(240,6%,83%));
+    border-color: hsl(240,6%,41%);
+}
+
+/* Type-Fire */
+.movemenu button.type-Fire {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(25,40%,84%), hsl(25,40%,70%));
+    border: 2px solid hsl(25,40%,70%);
+}
+.movemenu button.type-Fire:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(25,40%,77%), hsl(25,40%,60%));
+    border-color: hsl(25,40%,41%);
+}
+.movemenu button.type-Fire:active, .movemenu button.type-Fire.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(25,40%,77%), hsl(25,40%,83%));
+    border-color: hsl(25,40%,41%);
+}
+
+/* Type-Water */
+.movemenu button.type-Water {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(222,29%,84%), hsl(222,29%,70%));
+    border: 2px solid hsl(222,29%,70%);
+}
+.movemenu button.type-Water:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(222,29%,77%), hsl(222,29%,60%));
+    border-color: hsl(222,29%,41%);
+}
+.movemenu button.type-Water:active, .movemenu button.type-Water.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(222,29%,77%), hsl(222,29%,83%));
+    border-color: hsl(222,29%,41%);
+}
+
+/* Type-Grass */
+.movemenu button.type-Grass {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(100,30%,84%), hsl(100,30%,70%));
+    border: 2px solid hsl(100,30%,70%);
+}
+.movemenu button.type-Grass:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(100,30%,77%), hsl(100,30%,60%));
+    border-color: hsl(100,30%,41%);
+}
+.movemenu button.type-Grass:active, .movemenu button.type-Grass.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(100,30%,77%), hsl(100,30%,83%));
+    border-color: hsl(100,30%,41%);
+}
+
+/* Type-Electric */
+.movemenu button.type-Electric {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(48,41%,84%), hsl(48,41%,70%));
+    border: 2px solid hsl(48,41%,70%);
+}
+.movemenu button.type-Electric:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(48,41%,77%), hsl(48,41%,60%));
+    border-color: hsl(48,41%,41%);
+}
+.movemenu button.type-Electric:active, .movemenu button.type-Electric.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(48,41%,77%), hsl(48,41%,83%));
+    border-color: hsl(48,41%,41%);
+}
+
+/* Type-Psychic */
+.movemenu button.type-Psychic {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(342,33%,84%), hsl(342,33%,70%));
+    border: 2px solid hsl(342,33%,70%);
+}
+.movemenu button.type-Psychic:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(342,33%,77%), hsl(342,33%,60%));
+    border-color: hsl(342,33%,41%);
+}
+.movemenu button.type-Psychic:active, .movemenu button.type-Psychic.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(342,33%,77%), hsl(342,33%,83%));
+    border-color: hsl(342,33%,41%);
+}
+
+/* Type-Ice */
+.movemenu button.type-Ice {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(180,15%,84%), hsl(180,15%,70%));
+    border: 2px solid hsl(180,15%,70%);
+}
+.movemenu button.type-Ice:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(180,15%,77%), hsl(180,15%,60%));
+    border-color: hsl(180,15%,41%);
+}
+.movemenu button.type-Ice:active, .movemenu button.type-Ice.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(180,15%,77%), hsl(180,15%,83%));
+    border-color: hsl(180,15%,41%);
+}
+
+/* Type-Dragon */
+.movemenu button.type-Dragon {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(257,39%,84%), hsl(257,39%,70%));
+    border: 2px solid hsl(257,39%,70%);
+}
+.movemenu button.type-Dragon:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(257,39%,77%), hsl(257,39%,60%));
+    border-color: hsl(257,39%,41%);
+}
+.movemenu button.type-Dragon:active, .movemenu button.type-Dragon.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(257,39%,77%), hsl(257,39%,83%));
+    border-color: hsl(257,39%,41%);
+}
+
+/* Type-Dark */
+.movemenu button.type-Dark {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(24,18%,84%), hsl(24,18%,70%));
+    border: 2px solid hsl(24,18%,70%);
+}
+.movemenu button.type-Dark:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(24,18%,77%), hsl(24,18%,60%));
+    border-color: hsl(24,18%,41%);
+}
+.movemenu button.type-Dark:active, .movemenu button.type-Dark.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(24,18%,77%), hsl(24,18%,83%));
+    border-color: hsl(24,18%,41%);
+}
+
+/* Type-Fairy */
+.movemenu button.type-Fairy {
+    /* bg: 97 to 90, border: 70 */
+    background: linear-gradient(to right, hsl(310,41%,84%), hsl(310,41%,70%));
+    border: 2px solid hsl(310,41%,70%);
+}
+.movemenu button.type-Fairy:hover {
+    /* bg: 95 to 83, border: 41 */
+    background: linear-gradient(to right, hsl(310,41%,77%), hsl(310,41%,60%));
+    border-color: hsl(310,41%,41%);
+}
+.movemenu button.type-Fairy:active, .movemenu button.type-Fairy.pressed {
+    /* bg: 83 to 88, border: 41 */
+    background: linear-gradient(to right, hsl(310,41%,77%), hsl(310,41%,83%));
+    border-color: hsl(310,41%,41%);
+}
+
+/* Type-Stellar */
+.movemenu button.type-Stellar {
+    background: linear-gradient(to right, hsl(330, 65%, 65%), hsl(126, 71%, 73%), hsl(231, 100%, 77%));
+    border: 2px solid hsl(231, 98%, 65%); /* Using the blueish part for border as border-color does not accept gradient */
+}
+.movemenu button.type-Stellar:hover {
+    background: linear-gradient(to right, hsl(330, 65%, 62%), hsl(126, 71%, 67%), hsl(231, 100%, 68%));
+    border-color: hsl(231, 98%, 60%);
+}
+.movemenu button.type-Stellar:active, .movemenu button.type-Stellar.pressed {
+    background: linear-gradient(to right, hsl(330, 65%, 45%), hsl(126, 71%, 73%), hsl(231, 100%, 86%));
+    border-color: hsl(231, 98%, 60%);
+}

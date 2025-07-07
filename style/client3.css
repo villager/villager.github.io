@@ -1,0 +1,619 @@
+.popup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas de igual ancho */
+    grid-template-rows: auto 1fr; /* Dos filas, la segunda ocupa el resto del espacio */
+    gap: 10px; /* Espacio entre las zonas */
+    padding: 10px;
+    max-width: fit-content;
+}
+
+.favorites-zone {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.filters-zone {
+    grid-column: 2;
+    grid-row: 1;
+    border: 1px solid #ddd;
+}
+.formats-zone {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    font-size: 9pt;
+    font-family: Verdana, sans-serif;
+    padding: 10px;
+    border: 1px solid #ddd;
+    overflow-y: auto; /* Este es el scroll que buscas */
+    display: grid;
+    gap: 0;
+    align-content: start;
+    /* Puedes ajustar la altura máxima si es necesario */
+    max-height: 300px
+}
+
+.formats-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse; /* Para evitar bordes dobles entre celdas */
+}
+
+.formats-table-wrapper td {
+    padding: 5px 0;
+    vertical-align: top; /* Alinear el texto en la parte superior de la celda */
+}
+
+.formats-table-wrapper td button.format-item {
+    background: none;
+    border: none;
+    color: #333;
+    text-align: left;
+    display: block;
+    width: 100%;
+}
+
+.formats-table-wrapper td button.format-item i {
+    float: right;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.formats-table-wrapper td.section-header {
+    background-color: #ddd;
+    color: #333;
+    padding: 5px 0;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.formats-columns-wrapper {
+    display: contents; /* Permite que las columnas participen directamente en el grid del padre */
+}
+
+ .formats-column { /* Contenedor para cada columna de secciones */
+    display: flex;
+    flex-direction: column;
+}
+
+.section-header {
+    background-color: #ddd;
+    color: #333;
+    padding: 5px 0;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    width: 100%; /* Ocupa el ancho de la columna */
+}
+
+.formats-zone .formats-column-content { /* Contenedor para los formatos de cada sección */
+    display: flex;
+    flex-direction: column;
+}
+
+.formats-zone .format-item { /* Estilos para los botones de formato */
+    background: none;
+    border: none;
+    color: #333;
+    text-align: left;
+    display: block;
+    font-size: 9pt;
+    font-family: Verdana, sans-serif;
+}
+
+.formats-zone .format-item:hover {
+    background-color: #f0f0f0;
+    text-decoration: none;
+}
+
+.formats-zone .format-item.cur {
+    background-color: #d0d0d0;
+    font-weight: bold;
+}
+
+.formats-zone .format-item i {
+    float: right;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.starred-formats-list {
+    display: block;
+    margin-top: 5px;
+    overflow-y: auto; /* Añadir scroll vertical */
+    max-height: 150px; /* O ajusta este valor según la altura deseada */
+}
+
+.starred-formats-list button.format-item {
+    background: none;
+    border: none;
+    color: #333;
+    padding: 5px 0;
+    text-align: left;
+    width: 100%;
+    display: block;
+}
+
+.starred-formats-list button.format-item i {
+    float: right;
+    margin-left: 5px;
+    color: #FFD700;
+    text-shadow: 0 0 1px #000;
+    cursor: pointer;
+}
+
+.gen-filter-buttons {
+    display: flex; /* Disposición horizontal de los botones */
+    margin-top: 5px;
+    flex-wrap: wrap; /* Permite que se envuelvan si no hay suficiente espacio */
+}
+
+.category-filter-buttons {
+    display: block; /* Disposición vertical de los botones de categoría */
+    margin-top: 5px;
+    padding: 5px 0;
+}
+
+.category-button {
+    flex-wrap: wrap; /* Permite que se envuelvan si no hay suficiente espacio */
+    margin-bottom: 2px; /* Pequeño espacio entre los botones */
+}
+
+
+.favorites-zone strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.favorites-zone [name="starred-formats"] {
+    display: block;
+}
+
+.filters-zone input[name="search"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+.emojionearea-editor {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    resize: vertical !important;
+    overflow-y: auto !important; /* Necesario si usas max-height */
+    display: block !important;
+    height: 1.1em !important;
+    width: 100% !important;
+    resize: none !important;
+    font-size: 9pt !important;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    overflow-x: hidden !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Estilo para el menú de mundos al estilo Sims */
+.rooms-container {
+	display: flex;
+/*	gap: 20px;*/
+}
+
+.world-categories {
+	width: 200px;
+	background: #f0f0f0;
+	padding: 15px;
+	border-radius: 8px;
+}
+
+.world-categories h3 {
+	margin-top: 0;
+	color: #333;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+}
+
+.world-categories ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.world-categories li {
+	margin-bottom: 8px;
+}
+
+.world-category {
+	display: block;
+	padding: 8px;
+	color: #444;
+	text-decoration: none;
+	border-radius: 4px;
+	transition: all 0.2s;
+}
+
+.world-category:hover, .world-category.active {
+	background: #e0e0e0;
+	color: #000;
+}
+
+/* Lista de mundos */
+.worlds-list {
+    flex: 1;
+}
+
+.room-pair {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* Estilo individual de cada sala */
+.sims-world {
+    flex: 1;
+    min-width: 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+/* Sala vacía (placeholder) */
+.sims-world.empty {
+    visibility: hidden;
+    height: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+/* Ajustar el ancho cuando solo hay una sala */
+.room-pair:has(.sims-world:only-child) .sims-world {
+    flex: 0 1 calc(50% - 8px); /* Ocupa solo la mitad del espacio */
+    max-width: calc(50% - 8px);
+}
+
+.sims-world:hover {
+    transform: translateY(-3px);
+}
+
+
+
+
+/* Info más compacta */
+.world-info {
+    padding: 10px;
+}
+
+.world-info h3 {
+    margin: 0;
+    font-size: 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.world-users {
+    color: #4CAF50;
+    font-size: 0.8em;
+    margin: 5px 0 0 0;
+}
+/* Estilo para la sección de subrooms */
+.subrooms-section {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 0 0 8px 8px;
+}
+
+.subrooms-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #666;
+    font-size: 0.85em;
+}
+
+.subrooms-header i {
+    margin-right: 5px;
+    transform: rotate(90deg);
+}
+
+.subrooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.subroom-card {
+    display: block;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.subroom-card:hover {
+    transform: translateY(-2px);
+}
+
+
+.subroom-name {
+    padding: 5px;
+    font-size: 0.8em;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ajuste para que la tarjeta principal no tenga bordes redondeados abajo cuando hay subrooms */
+.sims-world:has(.subrooms-section) {
+    border-radius: 8px 8px 0 0;
+}
+.subrooms-toggle {
+    padding: 8px;
+    background: rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.85em;
+    color: #555;
+    border-radius: 0 0 8px 8px;
+}
+
+.subrooms-toggle:hover {
+    background: rgba(0,0,0,0.08);
+}
+
+.subrooms-toggle i {
+    transition: transform 0.2s;
+    font-size: 0.8em;
+}
+
+.subrooms-toggle.active i {
+    transform: rotate(180deg);
+}
+.world-thumbnail {
+    height: 150px; /* Mantener altura fija */
+    /* Eliminar background-color y propiedades de fondo del CSS */
+    /* Estas propiedades ahora se manejarán inline */
+}
+
+.subroom-thumbnail {
+    height: 60px;
+    /* También eliminar estilos de fondo aquí si es necesario */
+}
+.emoji-btn {
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none;               /* Opcional: Elimina cualquier borde predeterminado del botón */
+    box-shadow: none;           /* Opcional: Elimina cualquier sombra que pueda tener */
+    /*
+     * Consideraciones adicionales:
+     * - Puedes necesitar ajustar el padding si el botón se ve demasiado pegado al contenido.
+     * - Si el icono del emoji es de un color oscuro y el fondo de tu chat es oscuro,
+     * quizás necesites cambiar el color del icono (usando la propiedad 'color').
+     */
+    /* color: #333; /* Ejemplo: si quieres un color específico para el icono */
+}
+
+/* Opcional: Para asegurar que no tenga un fondo al pasar el ratón, al hacer click o al enfocarse */
+.emoji-btn:hover,
+.emoji-btn:focus,
+.emoji-btn:active {
+    background-color: transparent;
+    /* Si quieres un efecto visual al interactuar, puedes cambiar el color del icono: */
+    /* color: #555; */
+}
+
+.custom-icon {
+    width: 40px; /* Ajusta al tamaño de tu GIF */
+    height: 30px; /* Ajusta al tamaño de tu GIF */
+    background-size: contain; /* Asegura que la imagen se ajuste dentro del span */
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease-in-out; /* 0.3 segundos, con aceleración/desaceleración */
+    transform-origin: center center; /* Asegura que el zoom sea desde el centro */
+}
+
+.custom-icon:hover {
+    transform: scale(1.2); /* Hace la imagen un 20% más grande al pasar el cursor */
+    z-index: 2;
+    /* Puedes ajustar el valor (ej. 1.1 para un 10%, 1.5 para un 50%) */
+}
+
+.userlist li button{
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Opcional: para añadir un pequeño espacio entre el botón y el icono */
+}
+.userlist li button{
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Opcional: para añadir un pequeño espacio entre el botón y el icono */
+}
+.picon-zoomable {
+    /* Aquí definimos las transiciones para la animación */
+    transition: transform 0.3s ease-out, background-position 0.3s ease-out, background-size 0.3s ease-out;
+}
+
+/* Efecto al pasar el cursor sobre un picon que también es zoomable */
+.picon-zoomable:hover {
+    transform: scale(1.2); /* Escala el span y su contenido */
+
+    /* Recalcula la posición de fondo para mantener el centro del sprite */
+    /* Estos valores asumen que el sprite original es -160px -1740px */
+    /* Si tienes diferentes sprites, este cálculo DEBE ser dinámico o tendrás que definirlo por cada sprite que quieras zoomable */
+    /* Puedes usar variables CSS si tienes muchos y quieres más control */
+}
+
+
+        .icons-list {
+            /* IMPOR TANTE: Usamos Flexbox para alinear los iconos */
+            display: flex;
+            flex-wrap: wrap; /* Permite que los iconos salten de línea en pantallas pequeñas */
+            gap: 1rem; /* Espacio entre los iconos */
+            list-style: none; /* Quitar viñetas de lista */
+            padding: 0;
+            margin: 0;
+        }
+
+        .icon-item {
+            /* Estilo para cada icono individualmente */
+            background-color: #ffffff;
+            border: 1px solid #cbd5e0; /* Borde sutil */
+            border-radius: 0.5rem; /* Esquinas redondeadas */
+            padding: 0.5rem;
+            display: flex; /* Asegura que la imagen esté centrada si es necesario */
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra ligera */
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+                .current-icon-display {
+            background-color: #d1fae5; /* Fondo más claro para destacar */
+            border: 1px solid #34d399;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center; /* Centrar el icono */
+            align-items: center;
+        }
+        .icons-list button,
+        .icon-item button {
+            background: none; /* Sin fondo */
+            border: none; /* Sin borde */
+            padding: 0; /* Sin padding */
+            cursor: pointer; /* Cambia el cursor al pasar por encima */
+        }
+         .custom-icons-section {
+            background-color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+
+.intro-container {
+    border: 1px solid #4a4a4a;
+    background: linear-gradient(to bottom right, hsl(230, 40%, 15%), hsl(250, 30%, 10%));
+    padding: 15px;
+    border-radius: 15px; /* Usamos el border-radius del botón */
+    color: #E0E0E0;
+    max-width: 600px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Usamos el box-shadow del botón */
+    text-align: center; /* Centramos el texto dentro de este contenedor */
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho/alto */
+    margin: auto; /* Centra el div principal si el body no es flex o si tiene ancho fijo */
+  }
+
+  /* Estilos para el encabezado */
+  .intro-container h1 {
+    color: #f8a5c2;
+    font-family: 'Trebuchet MS', sans-serif;
+    text-shadow: 0 0 10px rgba(200, 200, 255, 0.6), 0 0 20px rgba(200, 200, 255, 0.3); /* Similar al text-shadow del botón */
+    margin-top: 0; /* Eliminar margen superior predeterminado */
+    margin-bottom: 15px; /* Espacio debajo del título */
+  }
+
+  /* Estilos para la advertencia */
+  .warning-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #f8a5c2;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Estilos para la línea horizontal */
+  .separator {
+    border: 0;
+    height: 1px;
+    background: #666;
+    margin: 20px 0; /* Más espacio antes y después */
+  }
+
+  /* Contenedor de botones */
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra los botones dentro de su contenedor */
+    gap: 15px; /* Espacio entre los botones */
+    margin: 20px 0; /* Más espacio para el grupo de botones */
+  }
+
+  /* Estilos base para los botones */
+  .styled-button {
+    border: none;
+    padding: 10px 15px; /* Ajuste de padding para que se vea bien */
+    border-radius: 15px; /* Usamos el border-radius del botón principal */
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición del botón principal */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Box-shadow del botón principal */
+    text-shadow: 0 0 10px rgba(200, 200, 255, 0.6), 0 0 20px rgba(200, 200, 255, 0.3); /* Text-shadow del botón principal */
+    font-family: 'Press Start 2P', cursive; /* Fuente del botón principal */
+    text-transform: uppercase; /* Mayúsculas como el botón principal */
+    letter-spacing: 2px; /* Espaciado de letras como el botón principal */
+    color: #E0E0E0; /* Color de texto base como el botón principal */
+  }
+
+  /* Colores de fondo específicos para cada botón */
+  .styled-button.staff { background: #f8a5c2; color: #2c2c54; }
+  .styled-button.foro { background: #63cdda; color: #2c2c54; }
+  .styled-button.discord { background: #e77f67; color: #2c2c54; }
+  .styled-button.rules { background: #f19066; color: #2c2c54; }
+
+  /* Efectos hover para cada botón */
+  .styled-button:hover {
+    transform: translateY(-3px); /* Un poco más de elevación en hover */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9); /* Sombra más grande en hover */
+  }
+
+  /* Colores de fondo más oscuros en hover para cada botón */
+  .styled-button.staff:hover { background-color: #e091af; }
+  .styled-button.foro:hover { background-color: #50b9c7; }
+  .styled-button.discord:hover { background-color: #d36b53; }
+  .styled-button.rules:hover { background-color: #dc7c52; }
+
+  /* Estilos para los detalles "Próximamente" */
+  .details-box {
+    margin-top: 20px; /* Más espacio */
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px; /* Más padding */
+    border-radius: 8px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border: 1px solid #706fd3; /* Un borde sutil que combine */
+  }
+
+  .details-box summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #f7d794;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    padding: 5px 0; /* Padding para la summary */
+  }
+
+  .details-box ul {
+    list-style: none; /* Eliminar viñetas */
+    padding: 0;
+    margin-top: 10px;
+    text-align: left; /* Alinear la lista a la izquierda */
+  }
+
+  .details-box li {
+    font-size: 13px;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Estilos para la frase final */
+  .tagline {
+    margin-top: 20px; /* Más espacio */
+    font-size: 14px; /* Un poco más grande */
+    color: #f7d794;
+    font-style: italic;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  }
