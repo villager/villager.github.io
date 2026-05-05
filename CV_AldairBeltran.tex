@@ -1,0 +1,192 @@
+%% CV – Aldair Beltran
+%% Compile with: pdflatex CV_AldairBeltran.tex
+\documentclass[10pt, letterpaper]{article}
+
+% ─── Packages ───────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1.8cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+
+% ─── Colors ─────────────────────────────────────────────────────────────────
+\definecolor{accent}{HTML}{185FA5}
+\definecolor{muted}{HTML}{555555}
+
+% ─── Hyperref setup ─────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks = true,
+  urlcolor   = accent,
+  linkcolor  = accent,
+  pdftitle   = {CV – Aldair Beltran},
+  pdfauthor  = {Aldair Beltran}
+}
+
+% ─── Section style ──────────────────────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{accent}}
+  {}{0em}{}
+  [\vspace{-0.4em}\textcolor{accent}{\rule{\linewidth}{0.6pt}}\vspace{-0.3em}]
+
+\titlespacing{\section}{0pt}{0.9em}{0.4em}
+
+% ─── Custom commands ─────────────────────────────────────────────────────────
+% Entry: {Title}{Date}{Subtitle (optional)}
+\newcommand{\entry}[3]{%
+  \noindent\textbf{#1}\hfill\textcolor{muted}{\small #2}%
+  \ifx&#3&\else\\\textcolor{muted}{\small #3}\fi%
+  \par\vspace{0.1em}%
+}
+
+\setlist[itemize]{noitemsep, topsep=0.2em, leftmargin=1.2em}
+
+% ─── Document ────────────────────────────────────────────────────────────────
+\begin{document}
+\pagestyle{empty}
+
+%% ── Header ──────────────────────────────────────────────────────────────────
+\begin{center}
+  {\LARGE\bfseries Aldair Beltran}\\[0.4em]
+  {\small
+    \faEnvelope\ \href{mailto:aldair.beltran@outlook.com}{aldair.beltran@outlook.com}\quad
+    \faPhone\ 813\,454\,3090\quad
+    \faMapMarker*\ Monterrey, NL, México\\[0.3em]
+    \faGithub\ \href{https://github.com/villager}{github.com/villager}\quad
+  }
+\end{center}
+
+\vspace{0.2em}
+
+%% ── Perfil ───────────────────────────────────────────────────────────────────
+\section{Perfil Profesional}
+
+Ingeniero en Tecnología de Software con más de 6 años de experiencia combinada en desarrollo de
+software y atención a clientes de alto valor. Autor de librerías open-source de alto rendimiento en
+Node.js (sin dependencias externas) para análisis de datos y parseo de formatos binarios.
+Especializado en desarrollo full-stack con JavaScript/TypeScript, Java y Python; experiencia
+construyendo plataformas web complejas, aplicaciones móviles y herramientas de sistemas. Capacidad demostrada para
+diseñar soluciones que compiten en rendimiento con ecosistemas consolidados como Polars/Pandas.
+
+%% ── Proyectos ────────────────────────────────────────────────────────────────
+\section{Proyectos Destacados}
+
+%% cervid/data
+\entry{\href{https://github.com/CervidLabs/data}{CervidLabs/data} — Análisis de datos tabulares}{Node.js · Open Source}{}
+\begin{itemize}
+  \item Parser y motor de análisis para CSV, JSON, TSV y NDJSON (formato columnar propio), equivalente
+        funcional a Pandas/Polars en el ecosistema Node.js.
+  \item Implementación sin dependencias externas; benchmarks documentados muestran tiempos competitivos
+        frente a Polars/Pandas en cargas CSV/JSON específicas.
+  \item API fluida con operaciones de filtrado, agrupación, agregación y proyección de columnas sobre
+        datasets de gran volumen.
+  \item Diseñada para integrarse nativamente en pipelines server-side sin necesidad de Python o entornos virtuales.
+\end{itemize}
+\vspace{0.2em}
+\textcolor{muted}{\small \texttt{Node.js · TypeScript · Streams API · NDJSON · Benchmarking}}
+
+\vspace{0.5em}
+
+%% cervid/decomposer
+\entry{\href{https://github.com/CervidLabs/decomposer}{CervidLabs/decomposer} — Intérprete de formatos binarios}{Node.js · Open Source}{}
+\begin{itemize}
+  \item Intérprete de bajo nivel para formatos binarios científicos y de ML: \texttt{.npy}, \texttt{.npz} (NumPy) y
+        \texttt{.parquet} (Apache).
+  \item Parseo nativo sin dependencias: implementa de cero los protocolos de serialización de cada formato.
+  \item Permite consumir artefactos de Python/PyTorch/scikit-learn directamente desde Node.js, eliminando
+        la necesidad de conversión o microservicios puente.
+  \item Arquitectura modular: cada formato es un plugin independiente con interfaz unificada.
+\end{itemize}
+\vspace{0.2em}
+\textcolor{muted}{\small \texttt{Node.js · TypeScript · Binary Parsing · NumPy · Apache Parquet}}
+
+\vspace{0.5em}
+
+%% cervid/vision
+\entry{\href{https://github.com/CervidLabs/vision}{CervidLabs/vision} — Motor de visión computacional}{Node.js · Open Source}{}
+\begin{itemize}
+  \item Decoder JPEG propio (SOF0/SOF1/SOF2 progressive) con Huffman paralelo por waves e IDCT en
+        workers; supera a Sharp en pipelines custom de visión computacional.
+  \item Codecs PNG y JPEG propios con DEFLATE paralelo real (workers OS), filtro Sub y pipeline
+        fusionado grayscale→blur→Sobel en un solo pase de memoria.
+  \item Kernels: morfología, resize bilinear/area, componentes conectados, detección de bordes, anotación;
+        API encadenable tipo OpenCV con \texttt{VisionPipeline} fusionado.
+\end{itemize}
+\vspace{0.2em}
+\textcolor{muted}{\small \texttt{Node.js · TypeScript · SharedArrayBuffer · Worker Threads · JPEG/PNG Codecs · Computer Vision}}
+
+\vspace{0.5em}
+
+%% Zug Arena
+\entry{\href{https://zugarena.com}{Zug Arena} — Plataforma web de ajedrez full-stack}{En desarrollo activo}{}
+\begin{itemize}
+  \item Plataforma completa de ajedrez online con motor de partidas en tiempo real, sistema de replay,
+        tienda de skins con previsualización en vivo y módulo educativo (Academia).
+  \item Academia con 19 lecciones estructuradas en 5 categorías, completamente en español; contenido
+        interactivo desde piezas básicas hasta finales y aperturas.
+  \item Set de piezas SVG personalizado (variante Duck Chess) diseñado e implementado desde cero.
+  \item Arquitectura Next.js con SSR/SSG, manejo de estado global y base de datos relacional para
+        perfiles y progreso de usuarios.
+\end{itemize}
+\vspace{0.2em}
+\textcolor{muted}{\small \texttt{Next.js · TypeScript · React · PostgreSQL · SVG/Canvas · WebSockets · Node.js}}
+
+%% ── Experiencia ──────────────────────────────────────────────────────────────
+\section{Experiencia Laboral}
+
+\entry{Asesor de Servicio a Cliente Patrimonial}{2021 – Actualidad}{Banca Afirme · Monterrey, NL}
+\begin{itemize}
+  \item Atención especializada a clientes con portafolio superior a \$1M MXN; gestión de productos bancarios y financieros complejos.
+  \item Reducción del 30\% en tiempos de respuesta mediante análisis sistemático de aclaraciones.
+  \item Tasa de satisfacción sostenida por encima del 95\%; implementación de estrategias de retención de alto valor.
+\end{itemize}
+
+\vspace{0.4em}
+
+\entry{Agente Telefónico – Especialista en Seguros}{2018 – 2020}{Teleperformance · Monterrey, NL}
+\begin{itemize}
+  \item Venta consultiva de pólizas de vida y automóvil; 120\% de cuota mensual de forma consistente.
+  \item Tasa de resolución en primera llamada del 85\% atendiendo más de 50 clientes diarios.
+  \item Reconocido como Agente del Mes en 3 ocasiones.
+\end{itemize}
+
+%% ── Educación ────────────────────────────────────────────────────────────────
+\section{Educación}
+
+\entry{Ingeniería en Tecnología de Software}{2021 – Actualidad}{FIME – UANL · 9° Semestre}
+
+\vspace{0.3em}
+
+\entry{Lic. en Multimedia y Animación Digital}{2018 – 2020}{FCFM – UANL}
+
+%% ── Habilidades ──────────────────────────────────────────────────────────────
+\section{Habilidades Técnicas}
+
+\begin{tabularx}{\linewidth}{@{} l X @{}}
+  \textbf{Lenguajes}      & JavaScript / TypeScript · Python · Java · C / C++ \\[0.3em]
+  \textbf{Frontend}       & React · Next.js · Angular · Vue \\[0.3em]
+  \textbf{Backend \& BD}  & Node.js · Express · MySQL · PostgreSQL · MongoDB \\[0.3em]
+  \textbf{Herramientas}   & Git · GitHub · Adobe Suite · UI/UX · Figma \\
+\end{tabularx}
+
+%% ── Certificaciones ──────────────────────────────────────────────────────────
+\section{Certificaciones y Diplomados}
+
+\begin{itemize}
+  \item Diplomado en SQL – Gestión avanzada de bases de datos relacionales
+  \item Diplomado en Diseño Gráfico – Herramientas Adobe y principios de diseño visual
+  \item Google Academy – Certificaciones en tecnologías web y cloud
+\end{itemize}
+
+%% ── Idiomas ──────────────────────────────────────────────────────────────────
+\section{Idiomas}
+
+\textbf{Español:} Nativo\quad\textbf{Inglés:} Intermedio–Avanzado\quad\textbf{Francés:} Básico
+
+\end{document}
